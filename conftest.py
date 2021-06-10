@@ -7,13 +7,14 @@ def pytest_addoption(parser):
                      help="Choose language: ec or fr")
 
 
+
 @pytest.fixture(scope="function")
-def browser():
+def browser(request):
+    user_language = request.config.getoption("language")
     print("\nstart browser for test..")
-    browser = webdriver.Chrome()
     options = Options()
     options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-    browser = webdriver.Chrome(options=options)
+    browser = webdriver.Chrome(r"C:\Users\v.demidov\PycharmProjects\chromedriver.exe",options=options)
     yield browser
     print("\nquit browser..")
     browser.quit()
